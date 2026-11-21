@@ -114,6 +114,8 @@
       border-radius: 999px; border: 1px solid var(--line); background: var(--surface);
     }
     .icon-btn:hover { border-color: var(--sakura); }
+    a.icon-btn { text-decoration: none; color: var(--muted); }
+    a.icon-btn:hover { color: var(--sakura-deep); }
     .icon-btn svg { width: 18px; height: 18px; }
     @media (max-width: 640px) { nav a.hide-sm { display: none; } }
 
@@ -346,6 +348,16 @@
     /* ───────────── Footer ───────────── */
     footer { padding: 60px 0 20px; color: var(--faint); font-size: .85rem; text-align: center; }
     footer .jp { font-family: "Fraunces", serif; font-style: italic; color: var(--sakura); font-size: 1.05rem; display: block; margin-bottom: 6px; }
+    .social { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 0 0 22px; }
+    .social a {
+      display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+      padding: 9px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface);
+      color: var(--ink); font-weight: 500; font-size: .9rem;
+      transition: border-color .15s ease, transform .15s ease;
+    }
+    .social a:hover { border-color: var(--sakura); transform: translateY(-1px); }
+    .social svg { width: 17px; height: 17px; color: var(--sakura-deep); }
+    .social-title { display: block; color: var(--muted); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 12px; }
   </style>
 </head>
 <body>
@@ -370,6 +382,9 @@
         <a href="#releases" class="hide-sm" data-needs="any">Releases</a>
         <a href="#releases" data-jump="video" data-needs="video" class="hide-sm">Videos</a>
         <a href="#releases" data-jump="audio" data-needs="audio" class="hide-sm">Audio</a>
+        <a class="icon-btn" data-social="facebook" href="https://www.facebook.com/profile.php?id=61592843703404" target="_blank" rel="noopener" aria-label="Sakurah on Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.6l.4-3.2h-3V8.4c0-.9.3-1.5 1.6-1.5h1.6V4.1c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.3H7.9v3.2h2.6V21z"/></svg>
+        </a>
         <button class="icon-btn" id="themeBtn" aria-label="Toggle light / dark theme">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
         </button>
@@ -389,6 +404,10 @@
             Watch now
           </button>
           <a class="btn" href="#releases" data-needs="any">Browse all</a>
+          <a class="btn" data-social="facebook" href="https://www.facebook.com/profile.php?id=61592843703404" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.6l.4-3.2h-3V8.4c0-.9.3-1.5 1.6-1.5h1.6V4.1c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.3H7.9v3.2h2.6V21z"/></svg>
+            Follow on Facebook
+          </a>
         </div>
       </div>
       <div class="feature" id="feature" role="button" tabindex="0" aria-label="Play featured release"></div>
@@ -415,6 +434,17 @@
 
   <footer>
     <div class="wrap">
+      <span class="social-title">Follow Sarah</span>
+      <div class="social">
+        <a data-social="facebook" href="https://www.facebook.com/profile.php?id=61592843703404" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.6l.4-3.2h-3V8.4c0-.9.3-1.5 1.6-1.5h1.6V4.1c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.3H7.9v3.2h2.6V21z"/></svg>
+          Facebook
+        </a>
+        <a data-social="youtube" href="https://www.youtube.com/@farfalla31" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2a2.7 2.7 0 0 0-1.9-1.9C18 4.8 12 4.8 12 4.8s-6 0-7.7.5a2.7 2.7 0 0 0-1.9 1.9C2 8.9 2 12 2 12s0 3.1.4 4.8a2.7 2.7 0 0 0 1.9 1.9c1.7.5 7.7.5 7.7.5s6 0 7.7-.5a2.7 2.7 0 0 0 1.9-1.9c.4-1.7.4-4.8.4-4.8s0-3.1-.4-4.8zM10 15.2V8.8l5.2 3.2z"/></svg>
+          YouTube
+        </a>
+      </div>
       <span class="jp">桜 — every bloom is brief, so play it loud.</span>
       © <span id="yr"></span> Sarah · Sakurah. All rights reserved.
     </div>
@@ -479,6 +509,14 @@
      The featured post sits at the top of the page. Everything else goes in
      the Releases grid, which stays hidden until there's a second post.
      ════════════════════════════════════════════════════════════════ */
+
+  // Social links — change a URL here and every link to it on the page updates.
+  const SOCIAL = {
+    facebook: "https://www.facebook.com/profile.php?id=61592843703404",
+    youtube:  "https://www.youtube.com/@farfalla31"
+  };
+  document.querySelectorAll("[data-social]").forEach(a => a.href = SOCIAL[a.dataset.social]);
+
   const POSTS = [
     {
       type: "video", featured: true, vertical: true,
